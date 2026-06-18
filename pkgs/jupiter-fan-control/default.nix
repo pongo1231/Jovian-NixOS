@@ -20,6 +20,11 @@ stdenv.mkDerivation(finalAttrs: {
   dontConfigure = true;
   dontBuild = true;
 
+  postPatch = ''
+    substituteInPlace usr/share/jupiter-fan-control/fancontrol.py \
+      --replace-fail 'if test_name == name:' 'if test_name.startswith(name):'
+  '';
+
   installPhase = ''
     runHook preInstall
 
